@@ -82,7 +82,7 @@ const galleryMarkup = images.map(({ preview, original, description }) => {
 }).join('');
 
 // Додаємо розмітку в контейнер
-// gallery.innerHTML = galleryMarkup;
+gallery.innerHTML = galleryMarkup;
 
 // Запобігаємо завантаженню зображень при кліку
 gallery.addEventListener('click', event => {
