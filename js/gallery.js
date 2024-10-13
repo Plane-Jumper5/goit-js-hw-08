@@ -63,35 +63,76 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
-const gallery = document.querySelector('ul.gallery');
+// const gallery = document.querySelector('ul.gallery');
 
-// Створюємо розмітку для кожного елемента галереї
-const galleryMarkup = images.map(({ preview, original, description }) => {
-  return `
-    <li class="gallery-item">
-      <a class="gallery-link" href="${original}">
-        <img
-          class="gallery-image"
-          src="${preview}"
-          data-source="${original}"
-          alt="${description}"
-        />
-      </a>
-    </li>
-  `;
-}).join('');
+// // Створюємо розмітку для кожного елемента галереї
+// const galleryMarkup = images.map(({ preview, original, description }) => {
+//   return `
+//     <li class="gallery-item">
+//       <a class="gallery-link" href="${original}">
+//         <img
+//           class="gallery-image"
+//           src="${preview}"
+//           data-source="${original}"
+//           alt="${description}"
+//         />
+//       </a>
+//     </li>
+//   `;
+// }).join('');
 
-// Додаємо розмітку в контейнер
-gallery.innerHTML = galleryMarkup;
+// // Додаємо розмітку в контейнер
+// gallery.innerHTML = galleryMarkup;
 
-// Запобігаємо завантаженню зображень при кліку
-gallery.addEventListener('click', event => {
-  event.preventDefault(); 
+// // Запобігаємо завантаженню зображень при кліку
+// gallery.addEventListener('click', event => {
+//   event.preventDefault(); 
 
-  const isGalleryImage = event.target.classList.contains('gallery-image');
+//   const isGalleryImage = event.target.classList.contains('gallery-image');
 
-  if (!isGalleryImage) return; // Якщо клік не по зображенню, не робимо нічого
+//   if (!isGalleryImage) return; // Якщо клік не по зображенню, не робимо нічого
 
-  const largeImageURL = event.target.dataset.source;
-  console.log(largeImageURL); // Тут можна відкрити модальне вікно з великим зображенням
-});
+//   const largeImageURL = event.target.dataset.source;
+//   console.log(largeImageURL); // Тут можна відкрити модальне вікно з великим зображенням
+// });
+
+const jsGallery = document.querySelector(".gallery");
+
+const jsGalleryItems = images.map(image => `
+  <li class="gallery-item">
+    <a class="gallery-link" href="${image.original}">
+      <img
+        class="gallery-image"
+        src="${image.preview}"
+        data-source="${image.original}"
+        alt="${image.description}"
+      />
+    </a>
+  </li>
+`)
+    .join(""); 
+
+jsGallery.insertAdjacentHTML("beforeend", jsGalleryItems);
+
+
+jsGallery.addEventListener("click", function (event) {
+       
+    if (event.target.tagName === 'IMG') {
+        
+        const img = event.target; 
+        const altText = img.alt; 
+        const src = img.src; 
+
+                const instance = basicLightbox.create(`
+            <div class="modal">
+                <p>${altText}</p>
+                <img src="${src}" width="100%" !height="auto">
+            </div>
+        `);
+        
+                instance.show();
+  }
+  event.preventDefault();
+
+}
+);
